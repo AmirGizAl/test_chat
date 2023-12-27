@@ -1,24 +1,16 @@
-# README
+# TestChat
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Проект чата для тестового задания
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Тестирование API:
+1. API-метод для получения всех созданных чатов - черз путь "/api/v1/chats"
+2. API-метод для создания сообщений в чате - черз путь "api/v1/messages",
+тело:
+```
+{
+    "message": {
+        "content": "Привет, это анонимное сообщение!",
+        "chat_title": "Название чата"
+   }
+}
+```
