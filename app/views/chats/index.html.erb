@@ -1,0 +1,40 @@
+<%= turbo_stream_from :chats %>
+
+<% if current_user.present? %>
+  <div class="flex items-center justify-between mb-4">
+    <%= form_tag(chats_path, remote: true, id: 'new_chat_form', class: "w-full max-w-xs") do %>
+      <div class="mb-4">
+        <%= label_tag :title, "Новый чат", class: "block text-gray-700 text-sm font-bold mb-2" %>
+        <%= text_field_tag :title, nil, class: "form-input appearance-none rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline-indigo focus:border-indigo-300", placeholder: "Введите название чата" %>
+      </div>
+      <% if flash[:alert] %>
+        <div class="text-danger">
+          <%= flash[:alert] %>
+        </div>
+      <% end %>
+      <p id="name-error" class="text-red-500 text-sm italic"></p>
+      <%= submit_tag "Создать", onclick: "return validateChatTitle();", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-800" %>
+    <% end %>
+  </div>
+<% end %>
+
+<h1 class="block text-2xl text-gray-700 font-bold mb-2">Список чатов</h1>
+<%= turbo_frame_tag :chats do %>
+  <%= render @chats %>
+<% end %>
+
+<script>
+    // Функция для проверки того, что поле для имени не пустое
+    function validateChatTitle() {
+        var titleField = document.getElementById('title');
+        var errorElement = document.getElementById('title-error');
+
+        if (titleField.value.trim() === '') {
+            errorElement.textContent = 'Имя чата не может быть пустым!';
+            return false;
+        } else {
+            errorElement.textContent = '';
+            return true;
+        }
+    }
+</script>

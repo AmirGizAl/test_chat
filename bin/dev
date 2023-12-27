@@ -1,0 +1,33 @@
+#!/usr/bin/env sh
+
+# Find the path to the Ruby executable
+RUBY_PATH="$(command -v ruby)"
+
+if [ -z "$RUBY_PATH" ]; then
+  echo "Ruby not found. Please make sure Ruby is installed."
+  exit 1
+fi
+
+# Check if foreman is installed
+if ! gem list foreman -i --silent; then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+
+# Default to port 3000 if not specified
+export PORT="${PORT:-3000}"
+
+# Start foreman using the found Ruby executable
+exec "$RUBY_PATH" -S foreman start -f Procfile.dev "$@"
+
+
+
+#if ! gem list foreman -i --silent; then
+#  echo "Installing foreman..."
+#  gem install foreman
+#fi
+#
+## Default to port 3000 if not specified
+#export PORT="${PORT:-3000}"
+#
+#exec foreman start -f Procfile.dev "$@"
